@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Design</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="circle modal__Open">
+    </div>
+
+    <div class="modal__popup">
+        <div class="modal__container">
+            <a href="javascript:void(0)" class="popup-close ui-close-popup"></a>
+            <div class="animation-overlay">
+                <div class="col-left">
+                    <div></div>
+                </div>
+                <div class="col-right">
+                    <div></div>
+                </div>
+            </div>
+            <div class="modal__popup--info">
+                <div class="col-left">
+                    <img src="images/travel-backpack-small-blue-front-grey.webp" alt="">
+                </div>
+                <div class="col-right">
+                    <div class="product">
+                        <div class="product__details">
+                            <a href="#" class="product__small">Women</a>
+                            <div class="product__title">
+                                Travel Backpack Small Nylon
+                            </div>
+                            <div class="product__price">
+                                $275
+                            </div>
+                            <div class="product__description">
+                                Introducing a back panel that secures onto your suitcase when rolling your bag. Pop in your laptop, charger, headphones, wallet, and keys and pop it on: our Small Backpack is easy and reliable, making it your go-to bag for on-the-go.
+                            </div>
+                            <button class="btn btn-default"><span>Add to Cart</span></button>
+                            <small>Pay in 4 installments of $68.75 with Klarna. <span>Learn More</span></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div class="overlay-mask"></div>
+    </div>
+
+    <script src="js/gsap.min.js"></script>
+    <script src="js/ScrollTrigger.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

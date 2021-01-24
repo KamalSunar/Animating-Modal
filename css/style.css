@@ -1,0 +1,369 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700&display=swap");
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  box-sizing: border-box;
+  background: #ddd;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #4A4A4A;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: normal;
+  line-height: 1.8;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+/*======= Modal Starts ======== */
+.circle {
+  background: #FFFFFF;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  pointer-events: all;
+  height: 70px;
+  width: 70px;
+  transition: transform 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+  will-change: transform;
+}
+
+.circle::before, .circle::after {
+  content: '';
+  position: absolute;
+  left: calc(50% - .5px);
+  top: calc(50% - .5px);
+  background: #000000;
+}
+
+.circle::before {
+  width: 29px;
+  left: calc(50% - 14.5px);
+  height: 1px;
+}
+
+.circle::after {
+  width: 1px;
+  height: 29px;
+  top: calc(50% - 14.5px);
+}
+
+.circle:hover {
+  transform: scale(1.2) rotate(90deg);
+}
+
+.modal__popup {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  overflow: hidden;
+  opacity: 0;
+  z-index: 40;
+  transition: width 0s linear 0.15s, opacity 0.15s cubic-bezier(0.4, 0, 0.1, 1);
+}
+
+.modal__popup.modal__popup--open {
+  opacity: 1;
+  transition: width 0s linear 0s, opacity 0s;
+  width: 100%;
+}
+
+.modal__popup .overlay-mask {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 0.35s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.modal__popup .modal__container {
+  position: relative;
+  width: calc(100% - 72px - 72px);
+  max-width: 1290px;
+  height: calc(100% - 72px - 72px);
+  max-height: 790px;
+  margin: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .modal__popup .modal__container {
+    width: calc(100% - 36px - 36px);
+    height: calc(100% - 36px - 36px);
+  }
+}
+
+@media (max-width: 860px) and (min-width: 769px) {
+  .modal__popup .modal__container {
+    width: calc(100% - 36px);
+  }
+}
+
+@media only screen and (max-width: 769px) {
+  .modal__popup .modal__container {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    min-height: 100%;
+    top: 0;
+    transform: none;
+    background-color: #FFFFFF;
+  }
+}
+
+.modal__popup .modal__container .popup-close {
+  display: inline-block;
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  top: 32px;
+  right: 32px;
+  transition: transform 0.5s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0s;
+  z-index: 1;
+  display: block;
+}
+
+.modal__popup .modal__container .popup-close:hover {
+  transform: rotate(90deg);
+}
+
+.modal__popup .modal__container .popup-close:before {
+  content: "";
+  height: 20px;
+  width: 1px;
+  background-color: #222;
+  position: absolute;
+  transform: rotate(45deg);
+  right: 50%;
+}
+
+.modal__popup .modal__container .popup-close:after {
+  content: "";
+  height: 20px;
+  width: 1px;
+  background-color: #222;
+  position: absolute;
+  transform: rotate(-45deg);
+  right: 50%;
+}
+
+.modal__popup .animation-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.modal__popup .animation-overlay .col-left,
+.modal__popup .animation-overlay .col-right {
+  position: relative;
+  flex-basis: 50%;
+  max-width: 50%;
+  min-width: 50%;
+}
+
+.modal__popup .animation-overlay .col-left > div,
+.modal__popup .animation-overlay .col-right > div {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0%;
+  width: 100%;
+  background: #FFFFFF;
+  transition: height 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+  will-change: transform;
+}
+
+.modal__popup .animation-overlay .col-right > div {
+  background-color: #ebebeb;
+  transition: height 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.1s;
+}
+
+.modal__popup .animation-overlay.show-cover .col-left > div,
+.modal__popup .animation-overlay.show-cover .col-right > div {
+  height: 100%;
+}
+
+.modal__popup .animation-overlay.hide-cover .col-left > div,
+.modal__popup .animation-overlay.hide-cover .col-right > div {
+  top: 0;
+  bottom: auto;
+  height: 0%;
+}
+
+.modal__popup--info {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  opacity: 0;
+  transition: height 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.1s;
+}
+
+.modal__popup--info .col-right, .modal__popup--info .col-left {
+  background-color: #FFFFFF;
+  flex-basis: 50%;
+  max-width: 50%;
+  min-width: 50%;
+  transform: translateY(200px);
+  transition: transform 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.1s;
+}
+
+.modal__popup--info .col-left {
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__popup--info .col-left img {
+  max-width: 100%;
+}
+
+.modal__popup--info .product {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  overflow: hidden;
+}
+
+.modal__popup--info .product__details {
+  margin-left: 115px;
+  max-width: 360px;
+  width: 100%;
+}
+
+@media (max-width: 1190px) {
+  .modal__popup--info .product__details {
+    margin-left: 64px;
+    max-width: 320px;
+  }
+}
+
+@media only screen and (max-width: 769px) {
+  .modal__popup--info .product__details {
+    width: 100%;
+    padding: 0;
+    margin: 22px 6% 20px 6%;
+    max-width: none;
+  }
+}
+
+.modal__popup--info .product__small {
+  font-size: 15px;
+  display: flex;
+  transition: color 0.2s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+}
+
+.modal__popup--info .product__title {
+  font-size: 27px;
+  text-align: left;
+  line-height: 1.4;
+  margin-bottom: 7px;
+}
+
+.modal__popup--info .product__price {
+  font-size: 25px;
+  color: #4a4a4a;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+
+.modal__popup--info .product__description {
+  overflow-wrap: break-word;
+  font-size: 16px;
+  letter-spacing: 0.3px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  color: #757575;
+}
+
+.modal__popup--info .product small {
+  font-size: 14px;
+}
+
+.modal__popup--info .product small span {
+  color: black;
+  font-weight: 600;
+}
+
+.modal__popup--info .product .btn {
+  width: 100%;
+  height: 50px;
+  margin-top: 5px;
+  margin-bottom: 7px;
+  cursor: pointer;
+}
+
+.modal__popup--info .product .btn.btn-default {
+  padding: 0px 82px;
+  color: #FFFFFF;
+  position: relative;
+  border: 1px solid #2A2A2A;
+  background-color: #2A2A2A;
+  line-height: 50px;
+  font-size: 16px;
+  letter-spacing: 0.3px;
+  overflow: hidden;
+  transition: background 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995), transform 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+}
+
+.modal__popup--info .product .btn.btn-default::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 0%;
+  background-color: #FFFFFF;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  transition: height 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995), opacity 0s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.35s;
+}
+
+.modal__popup--info .product .btn.btn-default:hover:before {
+  height: 100%;
+  opacity: 1;
+  transition: height 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995), opacity 0s;
+}
+
+.modal__popup--info .product .btn.btn-default:hover span {
+  color: #2A2A2A;
+}
+
+.modal__popup--info .product .btn.btn-default span {
+  display: block;
+  position: relative;
+  z-index: 1;
+  transition: color 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+}
+
+/*======= Modal Ends ======== */
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,412 @@
+/*======= Modal Starts ======== */
+.circle {
+    background: $white;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    pointer-events: all;
+    height: 70px;
+    width: 70px;
+    -webkit-transition: -webkit-transform 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+    transition: -webkit-transform 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+    -o-transition: transform 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+    transition: transform 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+    transition: transform 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995), 
+                -webkit-transform 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+    will-change: transform;
+
+    &::before, &::after {
+        content: '';
+        position: absolute;
+        left: calc(50% - .5px);
+        top: calc(50% - .5px);
+        background: $black;
+    }
+
+    &::before {
+        width: 29px;
+        left: calc(50% - 14.5px);
+        height: 1px;
+    }
+
+    &::after {
+        width: 1px;
+        height: 29px;
+        top: calc(50% - 14.5px);
+    }
+
+    &:hover {
+        -webkit-transform: scale(1.2) rotate(90deg);
+            -ms-transform: scale(1.2) rotate(90deg);
+                transform: scale(1.2) rotate(90deg);
+    }
+    
+}
+
+.modal__popup {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    overflow: hidden;
+    opacity: 0;
+    z-index: 40;
+    -webkit-transition: width 0s linear 0.15s,opacity 0.15s cubic-bezier(0.4, 0, 0.1, 1);
+    -o-transition: width 0s linear 0.15s,opacity 0.15s cubic-bezier(0.4, 0, 0.1, 1);
+    transition: width 0s linear 0.15s,opacity 0.15s cubic-bezier(0.4, 0, 0.1, 1);
+
+    &.modal__popup--open {
+        opacity: 1;
+        -webkit-transition: width 0s linear 0s, opacity 0s;
+        -o-transition: width 0s linear 0s, opacity 0s;
+        transition: width 0s linear 0s, opacity 0s;
+        width: 100%;
+    }
+
+    .overlay-mask {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+        width: 100%;
+        background: rgba(0,0,0,0.2);
+        z-index: 1;
+        opacity: 1;
+        -webkit-transition: opacity 0.35s cubic-bezier(0.5, 0, 0, 1);
+        -o-transition: opacity 0.35s cubic-bezier(0.5, 0, 0, 1);
+        transition: opacity 0.35s cubic-bezier(0.5, 0, 0, 1);
+    }
+
+    .modal__container {
+        position: relative;
+        width: calc(100% - 72px - 72px);
+        max-width: 1290px;
+        height: calc(100% - 72px - 72px);
+        max-height: 790px;
+        margin: auto;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+                transform: translateY(-50%);
+        z-index: 2;
+
+        @media (max-width: 1024px) and (min-width: 769px){
+            width: calc(100% - 36px - 36px);
+            height: calc(100% - 36px - 36px);
+        }
+
+        @media (max-width: 860px) and (min-width: 769px){
+            width: calc(100% - 36px);
+        }
+
+        @media only screen and (max-width: 769px){
+            width: 100%;
+            height: auto;
+            max-height: none;
+            min-height: 100%;
+            top: 0;
+            -webkit-transform: none;
+                -ms-transform: none;
+                    transform: none;
+            background-color:$white;
+        }
+
+        .popup-close {
+            display: inline-block;
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            top: 32px;
+            right: 32px;
+            -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0s;
+            transition: -webkit-transform 0.5s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0s;
+            -o-transition: transform 0.5s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0s;
+            transition: transform 0.5s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0s;
+            transition: transform 0.5s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0s, -webkit-transform 0.5s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0s;
+            z-index: 1;
+            display: block;
+
+            &:hover {
+                -webkit-transform: rotate(90deg);
+                    -ms-transform: rotate(90deg);
+                        transform: rotate(90deg);
+            }
+
+            &:before {
+                content: "";
+                height: 20px;
+                width: 1px;
+                background-color: #222;
+                position: absolute;
+                -webkit-transform: rotate(45deg);
+                    -ms-transform: rotate(45deg);
+                        transform: rotate(45deg);
+                right: 50%;
+            }
+
+            &:after {
+                content: "";
+                height: 20px;
+                width: 1px;
+                background-color: #222;
+                position: absolute;
+                -webkit-transform: rotate(-45deg);
+                    -ms-transform: rotate(-45deg);
+                        transform: rotate(-45deg);
+                right: 50%;
+            }
+        }  
+    }
+
+    .animation-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        z-index: 1;
+        pointer-events: none;
+
+        
+        .col-left, 
+        .col-right {
+            position: relative;
+            -ms-flex-preferred-size: 50%;
+                flex-basis: 50%;
+            max-width: 50%;
+            min-width: 50%;
+        }
+
+        .col-left>div, 
+        .col-right>div {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 0%;
+            width: 100%;
+            background:$white;
+            -webkit-transition: height 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+            -o-transition: height 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+            transition: height 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+            will-change: transform;
+        }
+
+        .col-right>div {
+            background-color: #ebebeb;
+            -webkit-transition: height 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.1s;
+            -o-transition: height 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.1s;
+            transition: height 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.1s;
+        }
+
+        &.show-cover .col-left>div, 
+        &.show-cover .col-right>div {
+            height: 100%;
+        }
+
+        &.hide-cover .col-left>div, 
+        &.hide-cover .col-right>div {
+            top: 0;
+            bottom: auto;
+            height: 0%;
+        }
+    }
+
+    &--info {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        height: 100%;
+        overflow: hidden;
+        opacity: 0;
+        -webkit-transition: height 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.1s;
+        -o-transition: height 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.1s;
+        transition: height 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.1s;
+
+        .col-right,.col-left {
+            background-color:$white;
+            -ms-flex-preferred-size: 50%;
+                flex-basis: 50%;
+            max-width: 50%;
+            min-width: 50%;
+            -webkit-transform: translateY(200px);
+                -ms-transform: translateY(200px);
+                    transform: translateY(200px);
+            -webkit-transition: -webkit-transform 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.1s;
+            transition: -webkit-transform 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.1s;
+            -o-transition: transform 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.1s;
+            transition: transform 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.1s;
+            transition: transform 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.1s, -webkit-transform 0.85s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.1s;
+        }
+
+        .col-left {
+            background-color: #f0f0f0;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+
+            img {
+                max-width: 100%;
+            }
+        }
+
+        .product {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            height: 100%;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            overflow: hidden;
+
+            &__details {
+                margin-left: 115px;
+                max-width: 360px;
+                width: 100%;
+
+                @media (max-width: 1190px){
+                    margin-left: 64px;
+                    max-width: 320px;
+                }
+        
+                @media only screen and (max-width: 769px){
+                    width: 100%;
+                    padding: 0;
+                    margin: 22px 6% 20px 6%;
+                    max-width: none;
+                }
+            }
+
+            &__small {
+                font-size: 15px;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-transition: color 0.2s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+                -o-transition: color 0.2s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+                transition: color 0.2s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+            }
+
+            &__title {
+                font-size: 27px;
+                text-align: left;
+                line-height: 1.4;
+                margin-bottom: 7px;
+            }
+
+            &__price {
+                font-size: 25px;
+                color: #4a4a4a;
+                font-weight: 500;
+                line-height: 1.2;
+                margin-bottom: 10px;
+            }
+
+            &__description {
+                overflow-wrap: break-word;
+                font-size: 16px;
+                letter-spacing: 0.3px;
+                line-height: 1.5;
+                margin-bottom: 15px;
+                color: #757575;
+            }
+
+            small {
+                font-size: 14px;
+                span {
+                    color: rgb(0, 0, 0);
+                    font-weight: 600;
+                }
+            }
+            
+            .btn {
+                width: 100%;
+                height: 50px;
+                margin-top: 5px;
+                margin-bottom: 7px;
+                cursor: pointer;
+            }
+            .btn.btn-default {
+                padding: 0px 82px;
+                color:$white;
+                position: relative;
+                border: 1px solid $primary;
+                background-color: $primary;
+                line-height: 50px;
+                font-size: 16px;
+                letter-spacing: 0.3px;
+                overflow: hidden;
+                -webkit-transition: background 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995),
+                            -webkit-transform 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+                transition: background 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995),
+                            -webkit-transform 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+                -o-transition: background 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995),
+                            transform 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+                transition: background 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995),
+                            transform 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+                transition: background 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995),
+                            transform 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995),
+                            -webkit-transform 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+
+                &::before {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 100%;
+                    height: 0%;
+                    background-color:$white;
+                    top: auto;
+                    bottom: 0;
+                    left: 0;
+                    opacity: 0;
+                    -webkit-transition: height 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995),
+                                opacity 0s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.35s;
+                    -o-transition: height 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995),
+                                opacity 0s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.35s;
+                    transition: height 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995),
+                                opacity 0s cubic-bezier(0.65, 0.005, 0.35, 0.995) 0.35s;
+                }
+                
+                &:hover {
+                    &:before {
+                        height: 100%;
+                        opacity: 1;
+                        -webkit-transition: height 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995),opacity 0s;
+                        -o-transition: height 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995),opacity 0s;
+                        transition: height 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995),opacity 0s;
+                    }
+                }
+
+                &:hover span {
+                    color: $primary;
+                }
+
+                span {
+                    display: block;
+                    position: relative;
+                    z-index: 1;
+                    -webkit-transition: color 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+                    -o-transition: color 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+                    transition: color 0.35s cubic-bezier(0.65, 0.005, 0.35, 0.995);
+                }
+            }
+
+        }
+
+    }
+}
+/*======= Modal Ends ======== */
